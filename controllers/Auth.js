@@ -77,7 +77,7 @@ exports.login = async (req, res) => {
         }
 
         // check if the user is available or not in the db 
-        const user = await userData.findOne({email});
+        let user = await userData.findOne({email});
 
         // if not a registered user
         if(!user )
@@ -106,8 +106,12 @@ exports.login = async (req, res) => {
                         });
 
             // putting the created token into the user
+            console.log(user);
             user.token = token;
+            console.log(user)
             user.password = undefined;
+            console.log(user);
+            // we have undefined the password bcoz we will return the user object and password must be hidden not available for free use
             const options = {
                 expiresIn: new Date( Date.now() + 3*24 * 60 * 60 * 1000),
                 httpOnly: true,
@@ -115,8 +119,8 @@ exports.login = async (req, res) => {
             }
 
             // cookie takes 3 parameters cookie name, cookie data, and some options of your choice
-            // here cookie name is token and we are pssing the above created token as cookie data  
-            res.cookie("token", token, options).status(200).json({
+            // here cookie name is zubairCookie and we are passing the above created token as cookie data  
+            res.cookie("zubairCookie", token, options).status(200).json({
                 success: true,
                 token, 
                 user,
