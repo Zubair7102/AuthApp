@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const userData = require("../models/userData");
-const userData = require("../models/userData");
+
 
 
 exports.signup = async(req, res) => {
@@ -9,7 +9,7 @@ exports.signup = async(req, res) => {
         const {name, email, password, role} = req.body;
 
         // check if the user already exist or not 
-        const existingUser = await userData.find({email});
+        const existingUser = await userData.findOne({email});
 
         if(existingUser)
         {
@@ -34,7 +34,7 @@ exports.signup = async(req, res) => {
             });
         }
 
-        // reate entry for new user
+        // create entry for new user
         const user = userData.create({
             name, email, password:hashedPassword, role
         })
