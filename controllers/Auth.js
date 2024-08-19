@@ -106,11 +106,10 @@ exports.login = async (req, res) => {
                         });
 
             // putting the created token into the user
-            console.log(user);
+            user = user.toObject();
             user.token = token;
-            console.log(user)
             user.password = undefined;
-            console.log(user);
+            console.log(user)
             // we have undefined the password bcoz we will return the user object and password must be hidden not available for free use
             const options = {
                 expiresIn: new Date( Date.now() + 3*24 * 60 * 60 * 1000),
